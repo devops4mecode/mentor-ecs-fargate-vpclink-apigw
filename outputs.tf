@@ -1,0 +1,7 @@
+output "load_balancer_ip" {
+  value = aws_lb.default.dns_name
+}
+
+output "load_balancer_arn" {
+  value = aws_lb.default.arn
+}
