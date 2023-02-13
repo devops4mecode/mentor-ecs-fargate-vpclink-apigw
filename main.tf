@@ -2,6 +2,7 @@ data "aws_availability_zones" "available_zones" {
   state = "available"
 }
 
+#VPC Setting
 resource "aws_vpc" "default" {
   cidr_block = "10.32.0.0/16"
 }
@@ -58,7 +59,7 @@ resource "aws_route_table_association" "private" {
   subnet_id      = element(aws_subnet.private.*.id, count.index)
   route_table_id = element(aws_route_table.private.*.id, count.index)
 }
-
+#Security Group Settig
 resource "aws_security_group" "lb" {
   name   = "do4m-alb-sg"
   vpc_id = aws_vpc.default.id
@@ -77,7 +78,7 @@ resource "aws_security_group" "lb" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-
+#AWS ALB Setting
 resource "aws_lb" "default" {
   name            = "do4m-lb"
   subnets         = aws_subnet.public.*.id
@@ -103,7 +104,7 @@ resource "aws_lb_listener" "hello_world" {
   }
 }
 
-/* ECS Cluster BEGIN*/
+#ECS Cluster & Fargate Setting
 resource "aws_ecs_task_definition" "hello_world" {
   family                   = "hello-world-app"
   network_mode             = "awsvpc"
@@ -173,10 +174,8 @@ resource "aws_ecs_service" "hello_world" {
 
   depends_on = [aws_lb_listener.hello_world]
 }
-/* ECS Cluster END*/
 
-
-/* API Gateway START*/
+# API Gateway Setting
 
 #1: API Gateway
 resource "aws_apigatewayv2_api" "api" {

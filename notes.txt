@@ -1,8 +1,0 @@
-- VPC
---Public Subnet(2)
---Private Subnet(2)
-
-
-terraform plan -out="tfplan"
-
-"name": "hello-world-app",
