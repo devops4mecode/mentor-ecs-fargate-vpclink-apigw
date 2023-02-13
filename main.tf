@@ -175,7 +175,7 @@ resource "aws_ecs_service" "hello_world" {
   depends_on = [aws_lb_listener.hello_world]
 }
 
-# API Gateway Setting
+# API Gateway & VPC PrivateLink Setting
 
 #1: API Gateway
 resource "aws_apigatewayv2_api" "api" {
